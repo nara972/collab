@@ -14,7 +14,7 @@ repositories {
 dependencies {
     // web mvc 추가
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    // 이 강의의 주제인 Security 추가
+    // Security 추가
     implementation 'org.springframework.boot:spring-boot-starter-security'
     // 웹 페이지를 쉽게 생성하기 위해 thymeleaf 추가
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -23,10 +23,10 @@ dependencies {
     // lombok
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    //mysql 연동
+    implementation 'mysql:mysql-connector-java'
     // spring data jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    // h2
-    runtimeOnly 'com.h2database:h2'
     // starter test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // security test
