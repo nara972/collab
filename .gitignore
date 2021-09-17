@@ -8,4 +8,5 @@ out/
 src/main/resources/static/.DS_Store
 .DS_Store
 
-gradlew.bat
+## OAuth
+application.yml

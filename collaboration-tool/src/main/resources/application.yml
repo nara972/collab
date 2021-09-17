@@ -12,8 +12,3 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
 
-  devtools:
-    livereload:
-      enabled: true
-  freemarker:
-    cache: false
