@@ -12,6 +12,8 @@ repositories {
 }
 
 dependencies {
+    // devtools 추가
+    runtimeOnly('org.springframework.boot:spring-boot-devtools')
     // web mvc 추가
     implementation 'org.springframework.boot:spring-boot-starter-web'
     // Security 추가
