@@ -9,4 +9,4 @@ src/main/resources/static/.DS_Store
 .DS_Store
 
 ## OAuth
-application.yml
+collaboration-tool/src/main/resources/application.yml
