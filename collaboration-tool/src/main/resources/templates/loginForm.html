@@ -1,17 +1,174 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>로그인 페이지</title>
+
+    <head th:replace="fragments.html :: head"></head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <style type="text/css">
+        body {
+            color: #fff;
+            background: #0f4c81;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .form-control {
+            min-height: 41px;
+            box-shadow: none;
+            border-color: #e1e4e5;
+        }
+
+        .form-control:focus {
+            border-color: #4181a1;
+        }
+
+        .form-control,
+        .btn {
+            border-radius: 3px;
+        }
+
+        .signup-form {
+            width: 400px;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        .signup-form form {
+            color: #9ba5a8;
+            border-radius: 3px;
+            margin-bottom: 15px;
+            background: #fff;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+
+        .signup-form h2 {
+            color: #333;
+            font-weight: bold;
+            margin-top: 0;
+        }
+
+        .signup-form h3 {
+            color: #333;
+            font-weight: normal;
+            margin-top: 0;
+        }
+
+        .signup-form hr {
+            margin: 0 -30px 20px;
+        }
+
+        .signup-form .form-group {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .signup-form label {
+            font-weight: normal;
+            font-size: 13px;
+        }
+
+        .signup-form .btn {
+            font-size: 16px;
+            font-weight: bold;
+            background: #4181a1;
+            border: none;
+            min-width: 140px;
+        }
+
+        .signup-form .btn:hover,
+        .signup-form .btn:focus {
+            background: #377391;
+            outline: none !important;
+        }
+
+        .signup-form a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .signup-form a:hover {
+            text-decoration: none;
+        }
+
+        .signup-form form a {
+            color: #4181a1;
+            text-decoration: none;
+        }
+
+        .signup-form form a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
-<h1>로그인 페이지</h1>
-<form th:action="@{/login}" method="POST">
-    <input type="text" name="username" placeholder="UserName"/><br/>
-    <input type="password" name="password" placeholder="Password"/><br/>
-    <button>로그인</button>
-</form>
-<a th:href="@{/oauth2/authorization/google}">구글 로그인</a>
-<a th:href="@{/joinForm}">회원가입을 아직 하지 않으셨나요?</a>
+
+<div class="signup-form mt-5">
+
+    <img src="/images/login-img.jpg" style="max-width: 50%; height: 50%;" />
+
+    <form action="#" class="needs-validation" th:action="@{/login}" method="post" novalidate>
+
+        <h3>로그인</h3>
+
+        <hr>
+
+        <div class="form-group">
+            <label for="username">이메일</label>
+            <input id="username" type="username" name="username" class="form-control" required minlength="3" maxlength="20">
+            <small id="nicknameHelp" class="form-text text-muted">
+                가입할 때 사용한 이메일을 입력하세요.
+            </small>
+            <small class="invalid-feedback">이메일을 입력하세요.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input id="password" type="password" name="password" class="form-control" required minlength="3" maxlength="20">
+            <span class="highlight"></span><span class="bar"></span>
+
+            <small id="passwordHelp" class="form-text text-muted">
+                패스워드를 입력하세요.
+                <!--                    패스워드를 잊어버렸다면, <a href="#" th:href="@{/email-login}">패스워드 찾기</a>-->
+            </small>
+            <small class="invalid-feedback">패스워드를 입력하세요.</small>
+
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me" checked>
+                <label class="form-check-label" for="rememberMe" aria-describedby="rememberMeHelp">
+                    로그인 유지</label>
+            </div>
+        </div>
+
+        <div class="row alert alert-danger" th:if="${param.error}" role="alert">
+            <small>이메일과 패스워드가 일치하지 않습니다.</small>
+        </div>
+
+
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block btn-lg"> <span>login</span>
+                <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
+            </button>
+            <p> </p>
+            <button type="button" class="btn btn-primary btn-block btn-lg" onclick="location.href='/oauth2/authorization/google'"> <span>Google Login</span>
+                <div class="ripples buttonRipples"> <span class="ripplesCircle"></span></div>
+            </button>
+        </div>
+    </form>
+
+    <div class="powered">
+        회원가입을 아직 하지 않으셨나요? <a th:href="@{/joinForm}"> 회원가입 </a>
+    </div>
+</div>
+
+<script th:replace="fragments.html :: form-validation"></script>
+
+
+
 </body>
+
 </html>

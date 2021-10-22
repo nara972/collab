@@ -10,3 +10,11 @@ src/main/resources/static/.DS_Store
 
 ## OAuth
 collaboration-tool/src/main/resources/application.yml
+
+### NPM ###
+src/main/resources/static/node_modules
+src/main/resources/static/node
+
+src/main/resources/static
+
+

@@ -2,7 +2,7 @@ package com.nara.collaboration.config.oauth;
 
 import com.nara.collaboration.config.auth.PrincipalDetails;
 import com.nara.collaboration.entity.User;
-import com.nara.collaboration.repository.UserRepository;
+import com.nara.collaboration.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -32,10 +32,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         //userRequest 정보->loadUser함수 호출->구글로부터 회원프로필 받아줌
         System.out.println("getAttributes:"+oAuth2User.getAttributes());
 
-        //회원가입을 강제로 진행해볼 예정
+        //회원가입을 강제로 진행
         String provider=userRequest.getClientRegistration().getClientId(); //google
         String providerId=oAuth2User.getAttribute("sub");
-        String username=provider+"_"+providerId;//google_10808979874425
+        //String username=provider+"_"+providerId;//google_10808979874425
+        String username=oAuth2User.getAttribute("name");
         String password=bCryptPasswordEncoder.encode("겟인데어");
         String email=oAuth2User.getAttribute("email");
         String role="ROLE_USER";
