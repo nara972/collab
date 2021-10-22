@@ -11,10 +11,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -78,6 +75,15 @@ public class UserController {
        }
         userService.saveUser(signUpForm);
         return "redirect:/loginForm";
+    }
+
+    @GetMapping("/profile/{email}")
+    public String viewProfile(@PathVariable String email,@CurrentUser User user,Model model){
+        User byEmail=userService.getUserByEmail(email);
+        model.addAttribute(byEmail);
+        model.addAttribute("isOwner",byEmail.equals(user));
+        model.addAttribute("throughNotification", false);
+        return "user/profile";
     }
 
 }

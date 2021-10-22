@@ -1,6 +1,6 @@
 package com.nara.collaboration.config.auth;
 
-import com.nara.collaboration.entity.User;
+import com.nara.collaboration.user.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

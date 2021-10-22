@@ -1,7 +1,7 @@
 package com.nara.collaboration.config.oauth;
 
 import com.nara.collaboration.config.auth.PrincipalDetails;
-import com.nara.collaboration.entity.User;
+import com.nara.collaboration.user.User;
 import com.nara.collaboration.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

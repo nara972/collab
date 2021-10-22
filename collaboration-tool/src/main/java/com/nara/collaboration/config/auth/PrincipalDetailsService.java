@@ -1,6 +1,6 @@
 package com.nara.collaboration.config.auth;
 
-import com.nara.collaboration.entity.User;
+import com.nara.collaboration.user.User;
 import com.nara.collaboration.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

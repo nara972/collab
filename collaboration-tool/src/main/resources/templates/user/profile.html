@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<head th:replace="fragments.html :: head"></head>
+
+<body>
+<nav th:replace="fragments.html :: main-nav"></nav>
+
+<div class="container">
+    <div class="row mt-5 justify-content-center">
+        <div class="col-2">
+            <!--Avatar-->
+            <svg th:if="${#strings.isEmpty(user.profileImage)}" class="img-fluid float-left rounded img-thumbnail"
+                 th:data-jdenticon-value="${user.username}" width="125" height="125"></svg>
+            <img th:if="${!#strings.isEmpty(user.profileImage)}" class="img-fluid float-left rounded img-thumbnail"
+                 th:src="${user.profileImage}"/>
+        </div>
+
+        <div class="col-8">
+            <h1 class="display-4" th:text="${user.username}">Nickname</h1>
+            <p class="lead" th:if="${!#strings.isEmpty(user.introduction)}" th:text="${user.introduction}">introduction</p>
+            <p class="lead" th:if="${#strings.isEmpty(user.introduction) && isOwner}">
+                한 줄 소개를 해주세요.
+            </p>
+        </div>
+    </div>
+    <div class="row mt-3 justify-content-center">
+        <div class="col-2">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link" th:classappend="${!throughNotification}? active" id="v-pills-intro-tab" data-toggle="pill" href="#v-pills-profile"
+                   role="tab" aria-controls="v-pills-home" aria-selected="true">소개</a>
+                <a class="nav-link" th:classappend="${throughNotification}? active" id="v-pills-notification-tab" data-toggle="pill" href="#v-pills-notification"
+                   role="tab" aria-controls="v-pills-notification" aria-selected="false">알림</a>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade" th:classappend="${!throughNotification}? 'show active'" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
+
+                    <p th:if="${isOwner}">
+                            <span style="font-size: 20px;">
+                                <i class="fa fa-envelope-o col-1"></i>
+                            </span>
+                        <span th:text="${user.email}" class="col-9"></span>
+                    </p>
+                    <p th:if="${isOwner}">
+                            <span style="font-size: 20px;">
+                                <i class="fa fa-calendar-o col-1"></i>
+                            </span>
+                        <span th:if="${isOwner}" class="col-9">
+                        </span>
+                        <span th:text="${#temporals.format(user.createDate, 'yyyy년 M월 가입')}" class="col-9"></span>
+                    </p>
+                    <div>
+                        <a class="btn btn-outline-primary" href="#">프로필 수정</a>
+                    </div>
+                </div>
+                <!-- 알 림 -->
+                <!--
+                <div class="tab-pane fade" th:classappend="${throughNotification}? 'show active'" id="v-pills-notification" role="tabpanel" aria-labelledby="v-pills-notification-tab">
+
+                    <ul class="list-group" th:each="notification : ${notifications}">
+
+                        <li class="list-group-item">
+
+
+                            <p class="alert alert-info" th:utext="${notification.message}">알림</p>
+                            <form id="confirm-form" th:action="@{'/profile/' + ${nickname} + '/accept/' + ${notification.id}}"
+                                  style="display: inline-block" method="post">
+
+
+                                <button id="notification-accept" type="submit" value="accept" class="member-list list-group-item">
+                                    수락
+                                </button>
+                            </form>
+
+
+                            <form id="reject-form" th:action="@{'/profile/' + ${nickname} + '/reject/' + ${notification.id}}"
+                                  method="post" style="display: inline-block">
+
+
+
+                                <button id="notification-reject" type="submit" value="reject" class="member-list list-group-item">
+                                    거절
+                                </button>
+                            </form>
+
+                        </li>
+
+
+
+                    </ul>
+                </div>-->
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<footer th:replace="fragments.html :: footer"></footer>
+</body>
+
+</html>

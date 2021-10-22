@@ -1,6 +1,5 @@
 package com.nara.collaboration.user;
 
-import com.nara.collaboration.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +16,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    //회원가입
     public User saveUser(@ModelAttribute @Valid SignUpForm signUpForm){
         User user=User.builder()
                 .email(signUpForm.getEmail())
@@ -26,6 +26,12 @@ public class UserService {
                 .build();
         return userRepository.save(user);
     }
+
+    public User getUserByEmail(String email){
+        User user=userRepository.findByEmail(email);
+        return user;
+    }
+
 
 
 }

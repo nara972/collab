@@ -1,4 +1,4 @@
-package com.nara.collaboration.entity;
+package com.nara.collaboration.user;
 
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +24,8 @@ public class User {
     @Lob
     @Basic(fetch = FetchType.EAGER)
     private String profileImage;
+
+    private String introduction;
 
     private String provider; //google
     private String providerId; //googleId
