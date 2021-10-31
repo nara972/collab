@@ -29,11 +29,17 @@ public class MainController {
 
 
     @GetMapping("/")
-    public String main(@CurrentUser User user, Model model){
+    public String index(@CurrentUser User user, Model model){
         if(user!=null){
             model.addAttribute(user);
         }
         return "index";
+    }
+
+    @GetMapping("/main")
+    public String main(@CurrentUser User user,Model model){
+        model.addAttribute(user);
+        return "main";
     }
 
 
