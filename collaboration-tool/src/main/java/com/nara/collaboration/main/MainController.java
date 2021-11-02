@@ -36,11 +36,7 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/main")
-    public String main(@CurrentUser User user,Model model){
-        model.addAttribute(user);
-        return "main";
-    }
+
 
 
 }

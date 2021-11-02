@@ -516,8 +516,8 @@
                     <!-- 프로젝트 이름 -->
                     <div class="form-group">
                         <label for="title" class="col-form-label">프로젝트 이름:</label>
-                        <input id="builderNick" type="text" th:name="builderNick"
-                               th:value="${#authentication.name}" hidden>
+                        <input id="builderNick" type="text" th:name="builderEmail"
+                               th:value="${user.email}" hidden>
                         <input type="text" class="form-control" id="title" name="title"  placeholder="title" minlength="3" required  >
                         <small id="title-error" class="form-text text-danger" th:if="${error}" th:text="${error}">Title Error</small>
 
@@ -553,11 +553,11 @@
     <div class="card" th:each="project_member : ${projectList}" >
 
         <div class="card-body">
-            <a th:href="@{'/project/' + ${project_member.project.builderNick} + '/' + ${project_member.project.title} + '/main'}">
+            <a th:href="@{'/project/' + ${project_member.project.builderEmail} + '/' + ${project_member.project.title} + '/main'}">
                 <h5 class="card-title"  th:text="${project_member.project.title}"></h5>
             </a>
 
-            <p class="card-text" th:text="${project_member.project.title}"></p>
+            <p class="card-text" th:text="${project_member.project.subtitle}"></p>
         </div>
         <div class="card-footer" style="background-color:#0f4c81">
 

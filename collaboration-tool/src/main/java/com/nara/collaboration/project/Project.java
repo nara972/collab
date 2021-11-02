@@ -1,17 +1,16 @@
 package com.nara.collaboration.project;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Entity
-@Data
+@Data @EqualsAndHashCode(of = "id")
 @Builder @AllArgsConstructor @NoArgsConstructor
 public class Project {
 
@@ -22,7 +21,7 @@ public class Project {
 
     private String subtitle;
 
-    private String builderNick;
+    private String builderEmail;
 
     private Long builder;
 
@@ -33,4 +32,7 @@ public class Project {
     private String description;
 
     private LocalDateTime buildDate;
+
+    @OneToMany(mappedBy = "project")
+    private List<ProjectMember> members=new ArrayList<>();
 }

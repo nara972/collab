@@ -1,4 +1,9 @@
 package com.nara.collaboration.project;
 
-public interface ProjectRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProjectRepository extends JpaRepository<Project,Long>{
+
+    Project findByTitleAndBuilderEmail(String title,String builderEmail);
+
 }

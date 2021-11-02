@@ -1,21 +1,22 @@
 package com.nara.collaboration.user;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.nara.collaboration.project.ProjectMember;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Data
-@NoArgsConstructor
+@Data @EqualsAndHashCode(of = "id")
+@Builder @AllArgsConstructor @NoArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String username;
     private String password;
     private String email;
@@ -42,4 +43,8 @@ public class User {
         this.providerId = providerId;
         this.createDate = createDate;
     }
+
+    @OneToMany(mappedBy="user")
+    private List<ProjectMember> projects=new ArrayList<>();
+
 }

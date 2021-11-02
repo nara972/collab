@@ -26,7 +26,8 @@ public class UserService {
                 .build();
         return userRepository.save(user);
     }
-
+    
+    //로그인시 이메일로 유저 검사
     public User getUserByEmail(String email){
         User user=userRepository.findByEmail(email);
         return user;
