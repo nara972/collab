@@ -518,7 +518,7 @@
                         <label for="title" class="col-form-label">프로젝트 이름:</label>
                         <input id="builderNick" type="text" th:name="builderEmail"
                                th:value="${user.email}" hidden>
-                        <input type="text" class="form-control" id="title" name="title"  placeholder="title" minlength="3" required  >
+                        <input type="text" class="form-control" id="title" name="title" placeholder="title" minlength="3" required  >
                         <small id="title-error" class="form-text text-danger" th:if="${error}" th:text="${error}">Title Error</small>
 
                     </div>

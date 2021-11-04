@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -43,4 +44,12 @@ public class ProjectService {
                 .build());
     }
 
+    public Project getProject(String email, String title) {
+        Project project=projectRepository.findByTitleAndBuilderEmail(title,email);
+        return project;
+    }
+
+    public List<ProjectMember> getMemberList(Project project) {
+        return memberRepository.findAllByProjectId(project.getId());
+    }
 }
