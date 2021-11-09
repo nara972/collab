@@ -55,5 +55,19 @@ public class ProjectController {
         return "redirect:/main";
 
     }
+    
+    //프로젝트별 메인 화면
+    @GetMapping("/project/{email}/{title}/main")
+    public String projectMain(@PathVariable String email,@PathVariable String title,Model model, @CurrentUser User user){
+        Project project=projectService.getProject(email,title);
+        List<ProjectMember> members=projectService.getMemberList(project);
+
+        //프로젝트에 필요한 정보
+        //유저가 해당 프로젝트의 멤버인지 확인
+        model.addAttribute(project);
+        model.addAttribute(members);
+        model.addAttribute(user);
+        return "project/project-main";
+    }
 
 }

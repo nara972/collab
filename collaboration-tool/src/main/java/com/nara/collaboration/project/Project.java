@@ -1,5 +1,6 @@
 package com.nara.collaboration.project;
 
+import com.nara.collaboration.project.schedule.Schedule;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,4 +36,12 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private List<ProjectMember> members=new ArrayList<>();
+
+    @OneToMany(mappedBy = "project")
+    private List<Schedule> schedules=new ArrayList<>();
+
+    public void addSchedule (Schedule schedule) {
+        this.schedules.add(schedule);
+    }
+
 }
