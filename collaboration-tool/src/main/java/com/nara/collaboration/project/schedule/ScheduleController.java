@@ -55,7 +55,7 @@ public class ScheduleController {
 
         Project project=projectService.getProject(email,title);
         scheduleService.saveNewSchedule(scheduleForm,project);
-        return "main";
+        return "redirect:/project/"+email+"/"+project.getTitle()+"/calendar";
 
 
     }
