@@ -25,4 +25,8 @@ public class ScheduleService {
         project.addSchedule(schedule);
         return scheduleRepository.save(schedule);
     }
+
+    public void deleteSchedule(Long scheduleId) {
+        scheduleRepository.deleteById(scheduleId);
+    }
 }
