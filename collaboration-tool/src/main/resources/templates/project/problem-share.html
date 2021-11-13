@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments.html :: head"></head>
+
+<style>
+    .h7 {
+            font-size: 0.8rem;
+    }
+
+    .gedf-wrapper {
+        margin-top: 0.97rem;
+    }
+
+    @media (min-width: 992px) {
+        .gedf-main {
+            padding-left: 4rem;
+            padding-right: 4rem;
+        }
+        .gedf-card {
+            margin-bottom: 2.77rem;
+        }
+    }
+
+    /**Reset Bootstrap*/
+    .dropdown-toggle::after {
+        content: none;
+        display: none;
+    }
+
+</style>
+
+<body>
+
+    <div>
+        <nav th:replace="fragments.html :: main-nav"></nav>
+
+        <nav th:replace="fragments.html :: project-nav(currentProject='problem')"></nav>
+
+        
+        <div class="container-fluid gedf-wrapper mt-5">
+            <div class="row">
+                <div class="col-md-3 mt-4">
+                   
+                </div>
+                
+                <!-- Card Post main -->
+                <div class="col-md-6 gedf-main">
+
+                    <form action="#" th:action="@{'/project/'+${project.builderEmail}+'/'+${project.title}+'/problem-share/post'}" method="post">
+                        <div class="card gedf-card">
+
+                            <!-- Make post header -->
+                            <div class="card-header">
+                                <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">글 작성</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Make post body -->
+                            <div class="card-body">
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                                        <div class="form-group">
+                                            <input type="hidden" class="form-control"  name="writer" th:value="${#authentication.name}" >
+                                            <input type="text" class="form-control"  name="title" placeholder="Title" required minlength="3">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            
+                                            <textarea class="form-control"  rows="3" name="content" placeholder="What are you thinking?" required minlength="3"></textarea>
+                                        </div>
+               
+        
+                                    </div>
+                                    <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                                        <div class="form-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="customFile">
+                                                <label class="custom-file-label" for="customFile">Upload image</label>
+                                            </div>
+                                        </div>
+                                        <div class="py-4"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="btn-toolbar justify-content-between">
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn btn-outline-primary">업로드</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="card gedf-card" th:each="problem : ${problemList}">
+                        <div class="card-header">
+                            
+                            <!-- post header -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- post writer icon -->
+                                    <div class="mr-2">
+                                        <svg th:if="${#strings.isEmpty(problem.writer?.profileImage)}" data-jdenticon-value="user127" th:data-jdenticon-value="${#authentication.name}"
+                                        width="45" class="rounded-circle"></svg>
+                                        <img th:if="${!#strings.isEmpty(problem.writer?.profileImage)}" th:src="${problem.writer.profileImage}"
+                                             class="rounded-circle"  width="45">
+                                    </div>
+
+                                    <!-- post writer name -->
+                                    <div class="ml-2">
+                                        
+                                        <div class="h5 m-0" th:text="${problem.writer.username}"></div>
+                                        <!-- <div class="h7 text-muted">Miracles Lee Cross</div> -->
+                                    </div>
+
+                                    
+                                </div>
+
+                                <!-- 삭제 -->
+                                <div>
+                                    <form id="delete-post-form" th:action="@{'/project/'+${project.builderEmail}+'/'+${project.title}+'/problem-share/' + ${problem.id}}"
+                                        method="post" th:if="${#authentication.name == problem.writer.username}">
+                                        <input type="hidden" name="_method" value="delete"/>
+                                        <button class="btn btn-outline-danger post-delete-btn">삭제</button>
+                                    </form>
+                                </div>
+                            </div>
+    
+                        </div>
+
+                        <!-- post main -->
+                        <div class="card-body">
+                            <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o problem-time" th:text="${problem.createdDate}"></i></div>
+                            <a class="card-link" href="#">
+                                <h5 class="card-title" th:text="${problem.title}"></h5>
+                            </a>
+    
+                            <p class="card-text" th:text="${problem.content}"></p>
+                        </div>
+                    </div>
+
+    </div>
+
+    <footer th:replace="fragments.html :: footer"></footer>
+
+    <script th:inline="javascript">
+
+        // set problem time
+        setWriteTimeByClassName("problem-time");
+        setWriteTimeByClassName("comment-time");
+
+        function setWriteTimeByClassName(className) {
+
+            let pt = $("." + className).each(function() {
+            let problemTime = new Date($(this).text());
+            let timeGap = getTimeGap(problemTime);
+
+            if(timeGap == null){
+                $(this).text(" " + problemTime.getFullYear()+'년 ' +
+                    (problemTime.getMonth()+1) + '월 ' +
+                    problemTime.getDate() + '일 ' +
+                    problemTime.getHours() + '시 ' +
+                    problemTime.getMinutes() + '분');
+            }
+            else{
+                $(this).text(" " + timeGap);
+            }
+
+        });
+        };
+
+        // how many times from write day
+        function getTimeGap(timeData) {
+            let nowTimeString =/*[[${nowTime}]]*/ 'default';
+
+            let nowTimeData = new Date(nowTimeString);
+            let nowSec = 0;
+            let problemSec = 0;
+            if(nowTimeData.getFullYear == timeData.getFullYear && nowTimeData.getMonth() == timeData.getMonth()){
+                nowSec += nowTimeData.getMinutes()*60;
+                nowSec += nowTimeData.getHours()*60*60;
+                nowSec += nowTimeData.getDate()*60*60*24;
+
+                nowSec -= timeData.getMinutes()*60;
+                nowSec -= timeData.getHours()*60*60;
+                nowSec -= timeData.getDate()*60*60*24;
+
+                //시간 전 작성
+                if(nowSec<60)
+                    return "방금전";
+                else if(nowSec < 3600){
+                    return nowSec/60+"분전";
+                }
+                else if(nowSec < 86400){
+                    return (nowSec/3600).toFixed(0) + "시간전";
+                }
+            } else
+                return null;
+        };
+
+    </script>
+</body>
+</html>
