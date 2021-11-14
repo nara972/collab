@@ -1,4 +1,4 @@
-package com.nara.collaboration.project.problem;
+package com.nara.collaboration.project.problemshare;
 
 import com.nara.collaboration.project.Project;
 import com.nara.collaboration.project.ProjectService;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -18,7 +17,7 @@ import java.util.List;
 public class ProblemShareController {
 
     private final ProjectService projectService;
-    private final ProblemService problemService;
+    private final ProblemShareService problemShareService;
     
     //문제 공유 페이지
     @GetMapping("/problem-share")
@@ -26,7 +25,7 @@ public class ProblemShareController {
                                @CurrentUser User user){
 
         Project project=projectService.getProject(email,title);
-        List<Problem> problemList=problemService.getProblem(project.getId());
+        List<Problem> problemList= problemShareService.getProblemList(project.getId());
 
         model.addAttribute(project);
         model.addAttribute("problemList",problemList);
@@ -42,7 +41,7 @@ public class ProblemShareController {
 
         Project project=projectService.getProject(email,title);
 
-        problemService.saveProblem(problemForm,project.getId(),user);
+        problemShareService.saveProblem(problemForm,project.getId(),user);
         return "redirect:/project/"+email+"/"+project.getTitle()+"/problem-share";
     }
     
@@ -53,7 +52,31 @@ public class ProblemShareController {
 
         Project project=projectService.getProject(email,title);
 
-        problemService.deleteProblem(problemId);
+        problemShareService.deleteProblem(problemId);
+        return "redirect:/project/"+email+"/"+project.getTitle()+"/problem-share";
+
+    }
+    
+    //문제 공유-코멘트 작성하기
+    @PostMapping("/problem-share/comment")
+    public  String commentPost(@PathVariable String email,@PathVariable String title,Model model,
+                               @CurrentUser User user,CommentForm commentForm){
+
+        Project project=projectService.getProject(email, title);
+        problemShareService.saveComment(commentForm,user);
+
+        return "redirect:/project/"+email+"/"+project.getTitle()+"/problem-share";
+
+    }
+
+    //문제 공유-코멘트 삭제하기
+    @PostMapping("/problem-share/comment/{commentId}")
+    public String commentDelete(@PathVariable String email,@PathVariable String title,Model model,
+                                @CurrentUser User user,@PathVariable Long commentId){
+
+        Project project=projectService.getProject(email,title);
+        problemShareService.deleteComment(commentId);
+
         return "redirect:/project/"+email+"/"+project.getTitle()+"/problem-share";
     }
 

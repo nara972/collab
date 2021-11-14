@@ -1,6 +1,8 @@
 package com.nara.collaboration.user;
 
 import com.nara.collaboration.project.ProjectMember;
+import com.nara.collaboration.project.problemshare.Comment;
+import com.nara.collaboration.project.problemshare.Problem;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -45,6 +47,6 @@ public class User {
     }
 
     @OneToMany(mappedBy="user")
-    private List<ProjectMember> projects=new ArrayList<>();
+    private List<ProjectMember> projects=new ArrayList<ProjectMember>();
 
 }

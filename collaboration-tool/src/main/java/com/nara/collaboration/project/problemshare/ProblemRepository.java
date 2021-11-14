@@ -1,4 +1,4 @@
-package com.nara.collaboration.project.problem;
+package com.nara.collaboration.project.problemshare;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

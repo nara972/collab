@@ -1,4 +1,4 @@
-package com.nara.collaboration.project.problem;
+package com.nara.collaboration.project.problemshare;
 
 import com.nara.collaboration.user.User;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +10,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ProblemService {
+public class ProblemShareService {
 
     private final ProblemRepository problemRepository;
+    private final CommentRepository commentRepository;
 
     //문제 공유 글 리스트
-    public List<Problem> getProblem(Long projectId){
+    public List<Problem> getProblemList(Long projectId){
         return problemRepository.findByProjectId(projectId);
     }
 
@@ -35,6 +36,29 @@ public class ProblemService {
     //문제 공유 글 삭제하기
     public void deleteProblem(Long problemId) {
         problemRepository.deleteById(problemId);
+    }
+    
+    //하나의 문제 공유 글 얻어오기
+    public Problem getProblemOne(Long problemId){
+        return problemRepository.findById(problemId).get();
+    }
+
+    //문제 공유-코멘트 작성하기
+    public Comment saveComment(CommentForm commentForm, User user) {
+
+        Problem problem=getProblemOne(commentForm.getProblemId());
+        Comment comment=Comment.builder()
+                .problem(problem)
+                .content(commentForm.getContent())
+                .writer(user)
+                .build();
+        return commentRepository.save(comment);
+
+    }
+
+    //문제 공유-코멘트 삭제하기
+    public void deleteComment(Long commentId) {
+        commentRepository.deleteById(commentId);
     }
 
 }
