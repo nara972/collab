@@ -52,4 +52,10 @@ public class ProjectService {
     public List<ProjectMember> getMemberList(Project project) {
         return memberRepository.findAllByProjectId(project.getId());
     }
+
+    public void saveDescription(Project project, String description) {
+        project.setDescription(description);
+        projectRepository.save(project);
+    }
+
 }

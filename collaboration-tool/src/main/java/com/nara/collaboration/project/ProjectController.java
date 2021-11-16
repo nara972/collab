@@ -70,4 +70,28 @@ public class ProjectController {
         return "project/project-main";
     }
 
+    //프로젝트 설명 작성 페이지
+    @GetMapping("/project/{email}/{title}/main/description")
+    public String projectDescription(@PathVariable String email,@PathVariable String title,Model model, @CurrentUser User user){
+
+        Project project=projectService.getProject(email,title);
+        model.addAttribute(project);
+        model.addAttribute(user);
+
+        return "project/description";
+    }
+
+
+    //프로젝트 설명 추가 & 수정
+    @PostMapping("/project/{email}/{title}/main/description")
+    public String projectDescription(@PathVariable String email,@PathVariable String title,Model model,
+                                     @CurrentUser User user,String description){
+
+        Project project=projectService.getProject(email,title);
+        projectService.saveDescription(project,description);
+
+        return "redirect:/project/"+email+"/"+project.getTitle()+"/main";
+
+    }
+
 }
