@@ -1,5 +1,6 @@
 package com.nara.collaboration.user;
 
+import com.nara.collaboration.notification.Notification;
 import com.nara.collaboration.project.ProjectMember;
 import com.nara.collaboration.project.problemshare.Comment;
 import com.nara.collaboration.project.problemshare.Problem;
@@ -48,5 +49,8 @@ public class User {
 
     @OneToMany(mappedBy="user")
     private List<ProjectMember> projects=new ArrayList<ProjectMember>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notifications=new ArrayList<>();
 
 }

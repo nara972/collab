@@ -1,6 +1,8 @@
 package com.nara.collaboration.user;
 
 import com.nara.collaboration.config.auth.PrincipalDetails;
+import com.nara.collaboration.notification.Notification;
+import com.nara.collaboration.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,6 +16,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,6 +25,7 @@ public class UserController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
     private final SignUpValidator signUpValidator;
+    private final NotificationService notificationService;
 
     @GetMapping("/test/login")
     public @ResponseBody
@@ -80,9 +84,28 @@ public class UserController {
     @GetMapping("/profile/{email}")
     public String viewProfile(@PathVariable String email,@CurrentUser User user,Model model){
         User byEmail=userService.getUserByEmail(email);
+        List<Notification> notifications=notificationService.getNotifications(user);
+
+        model.addAttribute("notifications",notifications);
         model.addAttribute(byEmail);
+
         model.addAttribute("isOwner",byEmail.equals(user));
         model.addAttribute("throughNotification", false);
+
+        return "user/profile";
+    }
+
+    @GetMapping("/profile/{email}/notification")
+    public String viewNotification(@PathVariable String email,@CurrentUser User user,Model model){
+        User byEmail=userService.getUserByEmail(email);
+        List<Notification> notifications=notificationService.getNotifications(user);
+
+        model.addAttribute("notifications",notifications);
+        model.addAttribute(byEmail);
+
+        model.addAttribute("isOwner",byEmail.equals(user));
+        model.addAttribute("throughNotification", true);
+
         return "user/profile";
     }
 

@@ -45,20 +45,13 @@
                             </span>
                         <span th:text="${user.email}" class="col-9"></span>
                     </p>
-                    <p th:if="${isOwner}">
-                            <span style="font-size: 20px;">
-                                <i class="fa fa-calendar-o col-1"></i>
-                            </span>
-                        <span th:if="${isOwner}" class="col-9">
-                        </span>
-                        <span th:text="${#temporals.format(user.createDate, 'yyyy년 M월 가입')}" class="col-9"></span>
-                    </p>
+
                     <div>
                         <a class="btn btn-outline-primary" href="#">프로필 수정</a>
                     </div>
                 </div>
                 <!-- 알 림 -->
-                <!--
+
                 <div class="tab-pane fade" th:classappend="${throughNotification}? 'show active'" id="v-pills-notification" role="tabpanel" aria-labelledby="v-pills-notification-tab">
 
                     <ul class="list-group" th:each="notification : ${notifications}">
@@ -67,9 +60,8 @@
 
 
                             <p class="alert alert-info" th:utext="${notification.message}">알림</p>
-                            <form id="confirm-form" th:action="@{'/profile/' + ${nickname} + '/accept/' + ${notification.id}}"
+                            <form id="confirm-form" th:action="@{'/profile/' + ${email} + '/accept/' + ${notification.id}}"
                                   style="display: inline-block" method="post">
-
 
                                 <button id="notification-accept" type="submit" value="accept" class="member-list list-group-item">
                                     수락
@@ -77,7 +69,7 @@
                             </form>
 
 
-                            <form id="reject-form" th:action="@{'/profile/' + ${nickname} + '/reject/' + ${notification.id}}"
+                            <form id="reject-form" th:action="@{'/profile/' + ${email} + '/reject/' + ${notification.id}}"
                                   method="post" style="display: inline-block">
 
 
@@ -92,7 +84,7 @@
 
 
                     </ul>
-                </div>-->
+                </div>
             </div>
 
         </div>
