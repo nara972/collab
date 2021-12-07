@@ -2,7 +2,9 @@ package com.nara.collaboration.user;
 
 import com.nara.collaboration.config.auth.PrincipalDetails;
 import com.nara.collaboration.notification.Notification;
+import com.nara.collaboration.notification.NotificationRepository;
 import com.nara.collaboration.notification.NotificationService;
+import com.nara.collaboration.project.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +29,8 @@ public class UserController {
     private final UserService userService;
     private final SignUpValidator signUpValidator;
     private final NotificationService notificationService;
+    private final NotificationRepository notificationRepository;
+    private final ProjectService projectService;
 
     @GetMapping("/test/login")
     public @ResponseBody
@@ -108,5 +113,39 @@ public class UserController {
 
         return "user/profile";
     }
+    
+    // 초대 수락
+    @PostMapping("/profile/{email}/accept/{notificationId}")
+    public String acceptInvitation(@PathVariable String email,@PathVariable Long notificationId,@CurrentUser User user){
+        Optional<Notification> notification=notificationRepository.findById(notificationId);
+        if(!notification.isPresent()){
+            return "redirect:/profile/"+email;
+        }
+        String projectTitle=notification.get().getProject().getTitle();
+        String projectBuilder=notification.get().getProject().getBuilderEmail();
+
+        projectService.saveProjectMember(user.getEmail(),projectTitle,projectBuilder);
+
+        return String.format("redirect:/project/%s/%s/main",projectBuilder,projectTitle);
+    }
+
+    //초대 거절
+    @PostMapping("/profile/{email}/reject/{notificationId}")
+    public String rejectInvitation(@PathVariable String email,@PathVariable Long notificationId,@CurrentUser User user){
+        Optional<Notification> notification=notificationRepository.findById(notificationId);
+        if(!notification.isPresent()){
+            return "redirect:/profile/"+email;
+        }
+        return "redirect:/profile/"+email;
+    }
+
+
+
+
+
+
+
+
+
 
 }
