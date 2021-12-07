@@ -125,6 +125,7 @@ public class UserController {
         String projectBuilder=notification.get().getProject().getBuilderEmail();
 
         projectService.saveProjectMember(user.getEmail(),projectTitle,projectBuilder);
+        notificationService.deleteNotification(notificationId);
 
         return String.format("redirect:/project/%s/%s/main",projectBuilder,projectTitle);
     }
@@ -136,6 +137,7 @@ public class UserController {
         if(!notification.isPresent()){
             return "redirect:/profile/"+email;
         }
+        notificationService.deleteNotification(notificationId);
         return "redirect:/profile/"+email;
     }
 
