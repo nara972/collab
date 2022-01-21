@@ -16,13 +16,13 @@
 - Spring Security
 - Gradle
 - JPA
-- QueryDSL
 - MySQL 8.0
 
 **`Front-end`**
 - HTML, CSS3
 - JavaScript, jQuery
--Bootstrap
+- Bootstrap
+- Thymeleaf
 
 <br>
 
