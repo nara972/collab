@@ -1,0 +1,7 @@
+package com.nara.collaboration.repository;
+
+import com.nara.collaboration.entity.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CommentRepository extends JpaRepository<Comment,Long> {
+}
