@@ -2,6 +2,7 @@ package com.nara.collaboration.service;
 
 import com.nara.collaboration.dto.SignUpForm;
 import com.nara.collaboration.entity.User;
+import com.nara.collaboration.exception.ResourceNotFoundException;
 import com.nara.collaboration.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,10 +33,7 @@ public class UserService {
     
     //로그인시 이메일로 유저 검사
     public User getUserByEmail(String email){
-        User user=userRepository.findByEmail(email);
-        return user;
+        return userRepository.findByEmail(email)
+                .orElseThrow(()-> new ResourceNotFoundException("User", "email", email));
     }
-
-
-
 }

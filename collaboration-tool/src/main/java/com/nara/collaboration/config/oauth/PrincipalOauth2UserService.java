@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
@@ -19,7 +21,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     //구글로 부터 받은 userRequest 데이터에 대한 후처리되는 함수
     //함수 종료시 @AuthenticationPrincipal 어노테이션이 만들어진다.
     @Override
@@ -41,7 +43,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String email=oAuth2User.getAttribute("email");
         String role="ROLE_USER";
 
-        User userEntity=userRepository.findByEmail(email);
+        User userEntity=userRepository.findByEmail(email).get();
 
         if(userEntity==null) {
             userEntity = User.builder()
@@ -57,4 +59,5 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         return new PrincipalDetails(userEntity,oAuth2User.getAttributes());
     }
+
 }

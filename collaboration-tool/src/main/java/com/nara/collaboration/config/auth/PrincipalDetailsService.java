@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PrincipalDetailsService implements UserDetailsService {
 
@@ -18,11 +20,13 @@ public class PrincipalDetailsService implements UserDetailsService {
     //함수 종료시 @AuthenticationPrincipal 어노테이션이 만들어진다.
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User userEntity =userRepository.findByEmail(email);
-        if(userEntity!=null){
-            return new PrincipalDetails(userEntity);
-        }
-        return null;
+
+        Optional<User> oUser =userRepository.findByEmail(email);
+
+        User user=oUser.orElseThrow(()->
+                        new UsernameNotFoundException("User not found with email"+ email));
+
+        return new PrincipalDetails(user);
     }
 
 }
