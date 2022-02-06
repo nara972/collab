@@ -31,6 +31,7 @@ public class ProjectService {
                 .builderEmail(projectBuildForm.getBuilderEmail())
                 .buildDate(LocalDateTime.now())
                 .build();
+        project.parseTitle();
         projectRepository.save(project);
         saveProjectMember(user.getEmail(),project.getTitle(),project.getBuilderEmail());
         return project;

@@ -49,4 +49,8 @@ public class Project {
         return URLEncoder.encode(this.title, StandardCharsets.UTF_8);
     }
 
+    public void parseTitle() {
+        this.title=this.title.trim().replace(" ","-");
+    }
+
 }
