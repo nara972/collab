@@ -46,7 +46,7 @@ public class ProblemShareController {
         Project project=projectService.getProject(email,title);
 
         problemShareService.saveProblem(problemForm,project.getId(),user);
-        return "redirect:/project/"+email+"/"+project.getTitle()+"/problem-share";
+        return "redirect:/project/"+email+"/"+project.getEncodedTitle()+"/problem-share";
     }
     
     //문제 공유 삭제하기
@@ -57,7 +57,7 @@ public class ProblemShareController {
         Project project=projectService.getProject(email,title);
 
         problemShareService.deleteProblem(problemId);
-        return "redirect:/project/"+email+"/"+project.getTitle()+"/problem-share";
+        return "redirect:/project/"+email+"/"+project.getEncodedTitle()+"/problem-share";
 
     }
     
@@ -69,7 +69,7 @@ public class ProblemShareController {
         Project project=projectService.getProject(email, title);
         problemShareService.saveComment(commentForm,user);
 
-        return "redirect:/project/"+email+"/"+project.getTitle()+"/problem-share";
+        return "redirect:/project/"+email+"/"+project.getEncodedTitle()+"/problem-share";
 
     }
 
@@ -81,7 +81,7 @@ public class ProblemShareController {
         Project project=projectService.getProject(email,title);
         problemShareService.deleteComment(commentId);
 
-        return "redirect:/project/"+email+"/"+project.getTitle()+"/problem-share";
+        return "redirect:/project/"+email+"/"+project.getEncodedTitle()+"/problem-share";
     }
 
 

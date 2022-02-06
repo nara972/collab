@@ -57,7 +57,7 @@ public class ScheduleController {
 
         Project project=projectService.getProject(email,title);
         scheduleService.saveNewSchedule(scheduleForm,project);
-        return "redirect:/project/"+email+"/"+project.getTitle()+"/calendar";
+        return "redirect:/project/"+email+"/"+project.getEncodedTitle()+"/calendar";
     }
 
     //스케줄 취소

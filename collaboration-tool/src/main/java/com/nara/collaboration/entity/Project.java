@@ -4,6 +4,8 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,10 @@ public class Project {
 
     public void addSchedule (Schedule schedule) {
         this.schedules.add(schedule);
+    }
+
+    public String getEncodedTitle(){
+        return URLEncoder.encode(this.title, StandardCharsets.UTF_8);
     }
 
 }

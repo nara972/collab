@@ -104,7 +104,7 @@ public class ProjectController {
         Project project=projectService.getProject(email,title);
         projectService.saveDescription(project,description);
 
-        return "redirect:/project/"+email+"/"+project.getTitle()+"/main";
+        return "redirect:/project/"+email+"/"+project.getEncodedTitle()+"/main";
 
     }
 
