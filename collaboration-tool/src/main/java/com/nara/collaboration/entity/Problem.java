@@ -38,4 +38,12 @@ public class Problem {
     @OneToMany(mappedBy = "problem")
     private List<Comment> comments=new ArrayList<Comment>();
 
+    //문제 공유 삭제 가능 확인
+    public boolean isDeleteable(User user){
+        if(this.writer.getId()!=user.getId()){
+            throw new IllegalArgumentException("허용되지 않은 유저입니다.");
+        }
+        return this.writer.equals(user);
+    }
+
 }

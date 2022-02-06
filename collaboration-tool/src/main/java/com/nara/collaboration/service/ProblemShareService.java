@@ -5,6 +5,7 @@ import com.nara.collaboration.dto.ProblemForm;
 import com.nara.collaboration.entity.Comment;
 import com.nara.collaboration.entity.Problem;
 import com.nara.collaboration.entity.User;
+import com.nara.collaboration.exception.ResourceNotFoundException;
 import com.nara.collaboration.repository.CommentRepository;
 import com.nara.collaboration.repository.ProblemRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,8 +42,16 @@ public class ProblemShareService {
     }
 
     //문제 공유 글 삭제하기
-    public void deleteProblem(Long problemId) {
-        problemRepository.deleteById(problemId);
+    public void deleteProblem(Long problemId,User user) {
+
+        Problem problem=problemRepository.findById(problemId)
+                .orElseThrow(()-> new ResourceNotFoundException("Problem","problemId",problemId));
+
+        if(problem.isDeleteable(user)) {
+            commentRepository.deleteAllByProblem(problem);
+            problemRepository.deleteById(problemId);
+        }
+
     }
     
     //하나의 문제 공유 글 얻어오기

@@ -49,4 +49,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Invitation> notifications=new ArrayList<>();
 
+    @OneToMany(mappedBy = "writer")
+    private List<Problem> problems=new ArrayList<>();
+
 }

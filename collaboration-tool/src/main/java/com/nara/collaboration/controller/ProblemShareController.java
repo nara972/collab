@@ -52,11 +52,11 @@ public class ProblemShareController {
     //문제 공유 삭제하기
     @PostMapping("/problem-share/{problemId}")
     public String problemShareDelete(@PathVariable String email,@PathVariable String title,@PathVariable Long problemId,
-                                     Model model){
+                                     Model model,@CurrentUser User user){
 
         Project project=projectService.getProject(email,title);
 
-        problemShareService.deleteProblem(problemId);
+        problemShareService.deleteProblem(problemId,user);
         return "redirect:/project/"+email+"/"+project.getEncodedTitle()+"/problem-share";
 
     }
