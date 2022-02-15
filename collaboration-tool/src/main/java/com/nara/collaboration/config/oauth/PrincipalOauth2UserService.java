@@ -38,7 +38,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         Optional<User> userEntity=userRepository.findByEmail(email);
 
-        User user=userEntity.orElse(registerNewUser(userRequest));
+        User user=userEntity.orElseGet(()->registerNewUser(userRequest));
 
         return new PrincipalDetails(user,oAuth2User.getAttributes());
     }
